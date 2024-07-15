@@ -4,7 +4,7 @@ import 'package:flutter_app/pages/iphone_13141.dart';
 import 'package:flutter_app/pages/iphone_13142.dart';
 import 'package:flutter_app/pages/iphone_13143.dart';
 import 'package:flutter_app/pages/iphone_13144.dart';
-import 'package:flutter_app/pages/status_bar_iphone.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

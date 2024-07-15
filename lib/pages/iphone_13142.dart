@@ -8,11 +8,13 @@ class Iphone13142 extends StatefulWidget {
 }
 
 class _Iphone13142State extends State<Iphone13142> {
-  String? _selectedRole = 'Student';
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,25 +44,17 @@ class _Iphone13142State extends State<Iphone13142> {
                 SizedBox(height: 20),
                 _buildTextField('Email address', _emailController),
                 SizedBox(height: 14),
-                _buildTextField('Password', _passwordController, isPassword: true),
+                _buildPasswordField('Password', _passwordController, _isPasswordVisible, () {
+                  setState(() {
+                    _isPasswordVisible = !_isPasswordVisible;
+                  });
+                }),
                 SizedBox(height: 14),
-                _buildTextField('Confirm Password', _confirmPasswordController, isPassword: true),
-                SizedBox(height: 26),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Register As',
-                    style: GoogleFonts.getFont(
-                      'Inter',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                      color: Color(0xFF000000),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                _buildRadioOption('Student'),
-                _buildRadioOption('Stall owner'),
+                _buildPasswordField('Confirm Password', _confirmPasswordController, _isConfirmPasswordVisible, () {
+                  setState(() {
+                    _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                  });
+                }),
                 SizedBox(height: 26),
                 _buildCreateAccountButton(), // Added create account button widget
                 SizedBox(height: 20),
@@ -73,10 +67,9 @@ class _Iphone13142State extends State<Iphone13142> {
     );
   }
 
-  Widget _buildTextField(String hint, TextEditingController controller, {bool isPassword = false}) {
+  Widget _buildTextField(String hint, TextEditingController controller) {
     return TextField(
       controller: controller,
-      obscureText: isPassword,
       decoration: InputDecoration(
         hintText: hint,
         filled: true,
@@ -102,29 +95,48 @@ class _Iphone13142State extends State<Iphone13142> {
     );
   }
 
-  Widget _buildRadioOption(String value) {
-    return Row(
-      children: [
-        Radio<String>(
-          value: value,
-          groupValue: _selectedRole,
-          onChanged: (String? newValue) {
-            setState(() {
-              _selectedRole = newValue;
-            });
-          },
+  Widget _buildPasswordField(String hint, TextEditingController controller, bool isPasswordVisible, VoidCallback onToggleVisibility) {
+    return TextField(
+      controller: controller,
+      obscureText: !isPasswordVisible,
+      decoration: InputDecoration(
+        hintText: hint,
+        filled: true,
+        fillColor: Color(0xFFF54748),
+        hintStyle: GoogleFonts.getFont(
+          'Inter',
+          fontWeight: FontWeight.w600,
+          fontSize: 20,
+          color: Color(0xFFFFFFFF),
         ),
-        Text(
-          value,
-          style: GoogleFonts.getFont(
-            'Inter',
-            fontWeight: FontWeight.w500,
-            fontSize: 20,
-            color: Color(0xFF000000),
+        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
+          borderSide: BorderSide.none,
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(
+            isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+            color: Color(0xFFFFFFFF),
           ),
+          onPressed: onToggleVisibility,
         ),
-      ],
+      ),
+      style: GoogleFonts.getFont(
+        'Inter',
+        fontWeight: FontWeight.w600,
+        fontSize: 20,
+        color: Color(0xFFFFFFFF),
+      ),
     );
+  }
+
+  bool _isEmailValid(String email) {
+    // Simple email validation using regular expression
+    String pattern =
+        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
+    RegExp regex = RegExp(pattern);
+    return regex.hasMatch(email);
   }
 
   Widget _buildCreateAccountButton() {
@@ -133,6 +145,28 @@ class _Iphone13142State extends State<Iphone13142> {
         String email = _emailController.text;
         String password = _passwordController.text;
         String confirmPassword = _confirmPasswordController.text;
+
+        if (!_isEmailValid(email)) {
+          // Show a snackbar with the error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Invalid email address'),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+        }
+
+        if (password.length < 8) {
+          // Show a snackbar with the error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Password must be at least 8 characters long'),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+        }
 
         if (password == confirmPassword) {
           try {
@@ -144,11 +178,21 @@ class _Iphone13142State extends State<Iphone13142> {
             Navigator.pushNamed(context, '/login');
           } catch (e) {
             // Handle error (e.g., show a dialog or a snackbar)
-            print('Error: $e');
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Error: $e'),
+                backgroundColor: Colors.red,
+              ),
+            );
           }
         } else {
           // Handle password mismatch (e.g., show a dialog or a snackbar)
-          print('Passwords do not match');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Passwords do not match'),
+              backgroundColor: Colors.red,
+            ),
+          );
         }
       },
       style: ElevatedButton.styleFrom(

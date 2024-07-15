@@ -10,6 +10,7 @@ class Iphone13143 extends StatefulWidget {
 
 class _Iphone13143State extends State<Iphone13143> {
   bool _rememberMe = false;
+  bool _isPasswordVisible = false;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -55,7 +56,11 @@ class _Iphone13143State extends State<Iphone13143> {
                       SizedBox(height: 20),
                       _buildTextField('Email address', controller: _emailController),
                       SizedBox(height: 14),
-                      _buildTextField('Password', isPassword: true, controller: _passwordController),
+                      _buildPasswordField('Password', _passwordController, _isPasswordVisible, () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      }),
                       SizedBox(height: 20),
                       Row(
                         children: [
@@ -140,6 +145,42 @@ class _Iphone13143State extends State<Iphone13143> {
     );
   }
 
+  Widget _buildPasswordField(String hint, TextEditingController controller, bool isPasswordVisible, VoidCallback onToggleVisibility) {
+    return TextField(
+      controller: controller,
+      obscureText: !isPasswordVisible,
+      decoration: InputDecoration(
+        hintText: hint,
+        filled: true,
+        fillColor: Color(0xFFF54748),
+        hintStyle: GoogleFonts.getFont(
+          'Inter',
+          fontWeight: FontWeight.w600,
+          fontSize: 20,
+          color: Color(0xFFFFFFFF),
+        ),
+        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
+          borderSide: BorderSide.none,
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(
+            isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+            color: Color(0xFFFFFFFF),
+          ),
+          onPressed: onToggleVisibility,
+        ),
+      ),
+      style: GoogleFonts.getFont(
+        'Inter',
+        fontWeight: FontWeight.w600,
+        fontSize: 20,
+        color: Color(0xFFFFFFFF),
+      ),
+    );
+  }
+
   Widget _buildLoginButton() {
     return ElevatedButton(
       onPressed: () async {
@@ -158,19 +199,10 @@ class _Iphone13143State extends State<Iphone13143> {
           );
         } catch (e) {
           // Show error or handle invalid credentials
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text('Login Failed'),
-              content: Text('Please enter valid credentials.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'),
-                ),
-              ],
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Invalid email or password. Please try again.'),
+              backgroundColor: Colors.red,
             ),
           );
         }

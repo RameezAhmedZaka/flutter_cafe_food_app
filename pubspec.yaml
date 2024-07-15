@@ -1,0 +1,51 @@
+name: flutter_app
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  google_fonts: ^6.2.1
+  firebase_core: ^3.2.0
+  firebase_auth: ^5.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  flutter_svg: ^2.0.10+1
+
+flutter:
+  uses-material-design: true
+  assets:
+  - assets/images/pngtreehabanero_bell_pepper_trinidad_moruga_145749601.png
+  - assets/images/macro_shot_of_apaprika_pepper_16_removebg_preview_1.png
+  - assets/images/cd_08040_e_5_b_5678536_ce_498_fec_removebg_preview_1.png
+  - assets/images/bunch_raw_mushrooms_wooden_plate_1.png
+  - assets/images/vertical_photo_green_lettuce_leaves_1.png
+  - assets/images/d_3_abdca_d_65_f_4_d_64957_e_5_e_2_bf_45_eba_76_removebg_preview_1.png
+  - assets/images/fresh_broccoli_vegetable_1.png
+  - assets/images/chef_making_ok_sign_white_background_1.png
+  - assets/vectors/icon_x2.svg
+  - assets/vectors/icon_2_x2.svg
+  - assets/vectors/icon_10_x2.svg
+  - assets/images/burger_1.png
+  - assets/images/pngtree_pizza_9062008_removebg_preview_1.png
+  - assets/images/a_63_e_81_acb_96424_ffab_5_removebg_preview_1.png
+  - assets/images/menu_1.png
+  - assets/images/pizza_1.png
+  - assets/images/strawberry_cake_1.png
+  - assets/vectors/icon_12_x2.svg
+  - assets/vectors/icon_13_x2.svg
+  - assets/vectors/icon_7_x2.svg
+  - assets/vectors/icon_1_x2.svg
+  - assets/vectors/battery_x2.svg
+  - assets/vectors/cellular_connection_x2.svg
+  - assets/vectors/wifi_x2.svg
+

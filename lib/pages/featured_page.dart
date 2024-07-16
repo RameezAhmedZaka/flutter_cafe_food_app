@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Iphone13144 extends StatelessWidget {
+class featured_page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return

@@ -24,6 +24,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+  - assets/images/cafe_1.png
   - assets/images/pngtreehabanero_bell_pepper_trinidad_moruga_145749601.png
   - assets/images/macro_shot_of_apaprika_pepper_16_removebg_preview_1.png
   - assets/images/cd_08040_e_5_b_5678536_ce_498_fec_removebg_preview_1.png

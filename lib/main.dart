@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/iphone_13141.dart';
-import 'package:flutter_app/pages/iphone_13142.dart';
-import 'package:flutter_app/pages/iphone_13143.dart';
-import 'package:flutter_app/pages/iphone_13144.dart';
-
+import 'package:flutter_app/pages/started_page.dart';
+import 'package:flutter_app/pages/signup_page.dart';
+import 'package:flutter_app/pages/login_page.dart';
+import 'package:flutter_app/pages/featured_page.dart';
+import 'package:flutter_app/pages/register_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,47 +19,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter App',
+      debugShowCheckedModeBanner: false, // Remove debug banner
       initialRoute: '/',
       routes: {
-        '/': (context) => Iphone13141(), // Default route to GetStartedPage
-        '/signup': (context) => Iphone13142(), // Route to Sign Up Page
-        '/login': (context) => Iphone13143(), // Route to Login Page
-        '/dashboard': (context) => Iphone13144(), // Route to Dashboard Page
+        '/': (context) => started_page(), // Default route to Iphone13141
+        '/register': (context) => register_page(), // Route to Register Page
+        '/signup': (context) => signup_page(), // Route to Sign Up Page
+        '/login': (context) => login_page(), // Route to Login Page
+        '/dashboard': (context) => featured_page(), // Route to Dashboard Page
       },
     );
   }
 }
-
-class GetStartedPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Get Started'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/signup'); // Navigate to Sign Up Page
-              },
-              child: Text('Create account'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/login'); // Navigate to Login Page
-              },
-              child: Text('Login'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-
-

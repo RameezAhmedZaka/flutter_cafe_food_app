@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_app/pages/iphone_13144.dart'; // Import your dashboard page
+import 'package:flutter_app/pages/featured_page.dart'; // Import your dashboard page
 
-class Iphone13143 extends StatefulWidget {
+class login_page extends StatefulWidget {
   @override
-  _Iphone13143State createState() => _Iphone13143State();
+  _login_pageState createState() => _login_pageState();
 }
 
-class _Iphone13143State extends State<Iphone13143> {
+class _login_pageState extends State<login_page> {
   bool _rememberMe = false;
   bool _isPasswordVisible = false;
   TextEditingController _emailController = TextEditingController();
@@ -195,7 +195,7 @@ class _Iphone13143State extends State<Iphone13143> {
           // Navigate to dashboard page on successful login
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Iphone13144()), // Navigate to dashboard page
+            MaterialPageRoute(builder: (context) => featured_page()), // Navigate to dashboard page
           );
         } catch (e) {
           // Show error or handle invalid credentials

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class Iphone13142 extends StatefulWidget {
+class signup_page extends StatefulWidget {
   @override
-  _Iphone13142State createState() => _Iphone13142State();
+  _signup_pageState createState() => _signup_pageState();
 }
 
-class _Iphone13142State extends State<Iphone13142> {
+class _signup_pageState extends State<signup_page> {
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
@@ -42,6 +43,8 @@ class _Iphone13142State extends State<Iphone13142> {
                   ),
                 ),
                 SizedBox(height: 20),
+                _buildTextField('Username', _usernameController), // Username field
+                SizedBox(height: 14),
                 _buildTextField('Email address', _emailController),
                 SizedBox(height: 14),
                 _buildPasswordField('Password', _passwordController, _isPasswordVisible, () {
@@ -56,9 +59,11 @@ class _Iphone13142State extends State<Iphone13142> {
                   });
                 }),
                 SizedBox(height: 26),
-                _buildCreateAccountButton(), // Added create account button widget
+                _buildCreateAccountButton(),
                 SizedBox(height: 20),
-                _buildLoginButton(), // Added login button widget
+                Divider(color: Color(0xFF000000)),
+                SizedBox(height: 20),
+                _buildLoginButton(),
               ],
             ),
           ),
@@ -142,9 +147,21 @@ class _Iphone13142State extends State<Iphone13142> {
   Widget _buildCreateAccountButton() {
     return ElevatedButton(
       onPressed: () async {
+        String username = _usernameController.text;
         String email = _emailController.text;
         String password = _passwordController.text;
         String confirmPassword = _confirmPasswordController.text;
+
+        if (username.isEmpty) {
+          // Show a snackbar with the error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Username cannot be empty'),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+        }
 
         if (!_isEmailValid(email)) {
           // Show a snackbar with the error message
@@ -174,6 +191,8 @@ class _Iphone13142State extends State<Iphone13142> {
               email: email,
               password: password,
             );
+            // Optionally, you can update the display name of the user with the username
+            await userCredential.user!.updateDisplayName(username);
             // Navigate to the login page after successful sign-up
             Navigator.pushNamed(context, '/login');
           } catch (e) {
@@ -245,3 +264,4 @@ class _Iphone13142State extends State<Iphone13142> {
     );
   }
 }
+

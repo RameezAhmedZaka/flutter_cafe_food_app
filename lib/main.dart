@@ -5,6 +5,10 @@ import 'package:flutter_app/pages/signup_page.dart';
 import 'package:flutter_app/pages/login_page.dart';
 import 'package:flutter_app/pages/featured_page.dart';
 import 'package:flutter_app/pages/register_page.dart';
+import 'package:flutter_app/pages/vendor_signup.dart';
+import 'package:flutter_app/pages/cart_page.dart';
+import 'package:flutter_app/pages/cart3_page.dart';
+import 'package:flutter_app/pages/cart2_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +31,8 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => signup_page(), // Route to Sign Up Page
         '/login': (context) => login_page(), // Route to Login Page
         '/dashboard': (context) => featured_page(), // Route to Dashboard Page
+        '/vendor_signup': (context) => vendor_signup(),
+
       },
     );
   }

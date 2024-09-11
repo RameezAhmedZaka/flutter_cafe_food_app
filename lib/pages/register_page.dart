@@ -62,7 +62,7 @@ class register_page extends StatelessWidget {
                     SizedBox(height: 21),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/stallOwnerSignup');
+                        Navigator.pushNamed(context, '/vendor_signup');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFF54748),
